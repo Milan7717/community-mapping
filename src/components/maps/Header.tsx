@@ -9,13 +9,32 @@ import NewsPanel from "@/components/maps/NewsPanel";
 import Recents from "@/components/maps/Recents";
 import {useGetNews} from "@/queries/news";
 import {useGetYoutubeVideos} from "@/queries/youtube";
+import PlaceResult = google.maps.places.PlaceResult;
+
+interface Location {
+    lat: number;
+    lng: number;
+}
+
+interface HeaderProps {
+    places: PlaceResult[];
+    userLocation: Location;
+    onPlaceClick: (place: google.maps.places.PlaceResult) => void;
+    riskAreas: {
+        center: google.maps.LatLngLiteral;
+        radius: number;
+        date: string;
+        discharge: number;
+        riskLevel: string;
+    }[];
+}
 
 const Header = ({
                     places,
                     userLocation,
                     onPlaceClick,
                     riskAreas
-                }: any) => {
+                }: HeaderProps) => {
     const {data: news} = useGetNews();
     const {data: youtube} = useGetYoutubeVideos();
     return (
